@@ -15,7 +15,7 @@ public class BinarySearchTreeService {
         // Sort numbers first
         Collections.sort(numbers);
 
-        // Build balanced BST directly from sorted array
+
         Node root = buildBalancedBST(numbers, 0, numbers.size() - 1);
 
         BinarySearchTree bst = new BinarySearchTree();
