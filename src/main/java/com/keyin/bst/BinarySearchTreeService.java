@@ -11,16 +11,12 @@ public class BinarySearchTreeService {
     private BinarySearchTreeRepository repository;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public BinarySearchTree createTree(List<Integer> numbers, boolean shouldBalance) throws Exception {
-        Node root = null;
-        for (int num : numbers) {
-            root = insert(root, num);
-        }
+    public BinarySearchTree createTree(List<Integer> numbers) throws Exception {
+        // Sort numbers first
+        Collections.sort(numbers);
 
-        // Balance the tree if requested
-        if (shouldBalance) {
-            root = balanceTree(root);
-        }
+        // Build balanced BST directly from sorted array
+        Node root = buildBalancedBST(numbers, 0, numbers.size() - 1);
 
         BinarySearchTree bst = new BinarySearchTree();
         bst.setInputNumbers(numbers.toString());
@@ -30,35 +26,8 @@ public class BinarySearchTreeService {
         return repository.save(bst);
     }
 
-    private Node insert(Node root, int value) {
-        if (root == null) {
-            return new Node(value);
-        }
-
-        if (value < root.getValue()) {
-            root.setLeft(insert(root.getLeft(), value));
-        } else if (value > root.getValue()) {
-            root.setRight(insert(root.getRight(), value));
-        }
-
-        return root;
-    }
-
     public List<BinarySearchTree> getAllTrees() {
         return repository.findAll();
-    }
-
-    public Node balanceTree(Node root) {
-        List<Integer> values = new ArrayList<>();
-        inOrderTraversal(root, values);
-        return buildBalancedBST(values, 0, values.size() - 1);
-    }
-
-    private void inOrderTraversal(Node root, List<Integer> values) {
-        if (root == null) return;
-        inOrderTraversal(root.getLeft(), values);
-        values.add(root.getValue());
-        inOrderTraversal(root.getRight(), values);
     }
 
     private Node buildBalancedBST(List<Integer> values, int start, int end) {

@@ -13,11 +13,9 @@ public class BinarySearchTreeController {
     private BinarySearchTreeService service;
 
     @PostMapping("/process-numbers")
-    public ResponseEntity<?> processNumbers(
-            @RequestBody Map<String, List<Integer>> request,
-            @RequestParam(defaultValue = "true") boolean balanced) { // i was going to make it so you could toggle between balanced and unbalanced trees but it was too much to implement
+    public ResponseEntity<?> processNumbers(@RequestBody Map<String, List<Integer>> request) {
         try {
-            BinarySearchTree result = service.createTree(request.get("numbers"), balanced);
+            BinarySearchTree result = service.createTree(request.get("numbers"));
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
