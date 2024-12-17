@@ -1,4 +1,4 @@
-# SDAT_Sprint1_Sprint2_Server
+# Binary Searcch Tree Visualizer
 
 This project is a Spring Boot application that provides a RESTful service for creating and retrieving binary search trees (BST) from a list of integers.
 
